@@ -1,17 +1,22 @@
 package edu.forum.hub.controllers.dtos;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.validation.constraints.NotNull;
 
 public record topicRequestDto(
         @NotNull
+        @JsonAlias("titulo")
         String title,
 
         @NotNull
-        String message,
+        @JsonAlias("mensagem")
+        String content,
 
         @NotNull
-        String author,
+        @JsonAlias("autor")
+        Long author,
 
         @NotNull
-        String course
-) {}
+        @JsonAlias("curso")
+        Long course
+) { }

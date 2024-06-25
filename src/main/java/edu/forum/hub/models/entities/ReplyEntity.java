@@ -21,15 +21,15 @@ public class ReplyEntity {
     @Column(nullable = false)
     private String message;
 
-    @Column(nullable = false)
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "author_id")
-    private String author;
-
     @Setter
     @Column(nullable = false)
-//    @ManyToOne
-//    @JoinColumn(name = "topic_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "topic_id", nullable = false)
     private TopicEntity topic;
 
     @Column(name = "creation_date", nullable = false)

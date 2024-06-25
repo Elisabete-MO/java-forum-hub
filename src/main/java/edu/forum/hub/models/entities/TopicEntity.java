@@ -21,21 +21,22 @@ public class TopicEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @Column(nullable = false)
     private String title;
 
+    @Setter
     @Column(nullable = false)
-    private String message;
+    private String content;
 
-    @Column(nullable = false)
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "author_id")
-    private String author;
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
-    @Column(nullable = false)
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "course_id")
-    private String course;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id", nullable = false)
+    private CourseEntity course;
 
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
@@ -45,19 +46,4 @@ public class TopicEntity {
 
     @OneToMany(mappedBy = "topic", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ReplyEntity> replies = new ArrayList<>();
-
-    // CONSTRUCTOR
-    public TopicEntity(topicRequestDto topicRequestDto) {
-        this.title = topicRequestDto.title();
-        this.message = topicRequestDto.message();
-        this.author = topicRequestDto.author();
-        this.course = topicRequestDto.course();
-        this.creationDate = LocalDateTime.now();
-        this.status = false;
-    }
-
-    public void setReplies(List<ReplyEntity> replies) {
-        replies.forEach(reply -> reply.setTopic(this));
-        this.replies = replies;
-    }
 }
