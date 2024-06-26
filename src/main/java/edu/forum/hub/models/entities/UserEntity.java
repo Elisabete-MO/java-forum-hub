@@ -1,11 +1,13 @@
 package edu.forum.hub.models.entities;
 
+import edu.forum.hub.controllers.dtos.UserRequestDto;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,13 +22,17 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @NotBlank
+    @Email
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @NotBlank
+    @Column(nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade =
@@ -41,13 +47,20 @@ public class UserEntity {
             CascadeType.ALL)
     private List<TopicEntity> topics = new ArrayList<>();
 
+    //CONSTRUCTORS
+    public UserEntity(UserRequestDto userRequestDto) {
+        this.name = userRequestDto.name();
+        this.email = userRequestDto.email();
+        this.password = userRequestDto.password();
+    }
+
     //METHODS
     public void addProfile(ProfileEntity profile) {
         profile.setUser(this);
         this.profiles.add(profile);
     }
 
-    public void removeprofile(ProfileEntity profile) {
+    public void removeProfile(ProfileEntity profile) {
         this.profiles.remove(profile);
     }
 

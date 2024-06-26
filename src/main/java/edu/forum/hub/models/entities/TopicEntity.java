@@ -1,6 +1,5 @@
 package edu.forum.hub.models.entities;
 
-import edu.forum.hub.controllers.dtos.topicRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +33,7 @@ public class TopicEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", nullable = false)
     private CourseEntity course;
@@ -46,4 +46,15 @@ public class TopicEntity {
 
     @OneToMany(mappedBy = "topic", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ReplyEntity> replies = new ArrayList<>();
+
+    //CONSTRUCTORS
+    public TopicEntity(String title, String content, UserEntity user, CourseEntity course) {
+        this.title = title;
+        this.content = content;
+        this.user = user;
+        this.course = course;
+        this.creationDate = LocalDateTime.now();
+        this.status = false;
+        this.replies = new ArrayList<>();
+    }
 }

@@ -31,4 +31,5 @@ public class CourseEntity {
         topic.setCourse(this);
         this.topics.add(topic);
     }
+
 }

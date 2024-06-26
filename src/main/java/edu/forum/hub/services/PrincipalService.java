@@ -1,26 +1,33 @@
 package edu.forum.hub.services;
 
-import edu.forum.hub.controllers.dtos.topicRequestDto;
-import edu.forum.hub.controllers.dtos.topicResponseDto;
+import edu.forum.hub.controllers.dtos.CourseResponseDto;
+import edu.forum.hub.controllers.dtos.TopicRequestDto;
+import edu.forum.hub.controllers.dtos.TopicResponseDto;
+import edu.forum.hub.controllers.dtos.UserResponseDto;
 import edu.forum.hub.models.entities.TopicEntity;
-//import edu.forum.hub.repository.TopicRepository;
+import edu.forum.hub.repository.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PrincipalService {
 
-//    @Autowired
-//    private TopicRepository topicRepository;
+    @Autowired
+    private TopicRepository topicRepository;
 
-    public topicResponseDto createTopic(topicRequestDto request) {
-        // buscar usuario pelo id e curso pelo id e criar um novo tópico
-        TopicEntity newTopic = new TopicEntity(request);
-//        topicRepository.save(newTopic);
+    @Autowired
+    private UserService userService;
 
-        return new topicResponseDto(newTopic.getId(), newTopic.getTitle(),
-                newTopic.getContent(), newTopic.getUser(),
-                newTopic.getCourse(), newTopic.getCreationDate(),
-                newTopic.getStatus(), newTopic.getReplies());
+    @Autowired
+    private CourseService courseService;
+
+    public TopicResponseDto createTopic(TopicRequestDto request) {
+        UserResponseDto user = userService.getUserById(request.author());
+        CourseResponseDto course = courseService.getCourseById(request.course());
+        TopicEntity newTopic = new TopicEntity(request.title(),
+                request.content(), user.toEntity(), course.toEntity());
+        topicRepository.save(newTopic);
+
+        return new TopicResponseDto(newTopic);
     }
 }

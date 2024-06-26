@@ -1,7 +1,7 @@
 package edu.forum.hub.controllers;
 
-import edu.forum.hub.controllers.dtos.topicRequestDto;
-import edu.forum.hub.controllers.dtos.topicResponseDto;
+import edu.forum.hub.controllers.dtos.TopicRequestDto;
+import edu.forum.hub.controllers.dtos.TopicResponseDto;
 import edu.forum.hub.services.PrincipalService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,8 @@ public class PrincipalController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<topicResponseDto> createTopic(@RequestBody @Valid topicRequestDto request, UriComponentsBuilder uriBuilder) {
-        topicResponseDto newTopic = principalService.createTopic(request);
+    public ResponseEntity<TopicResponseDto> createTopic(@RequestBody @Valid TopicRequestDto request, UriComponentsBuilder uriBuilder) {
+        TopicResponseDto newTopic = principalService.createTopic(request);
 
         var uri =
                 uriBuilder.path("/medicos/{id}").buildAndExpand(newTopic.id()).toUri();
