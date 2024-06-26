@@ -13,16 +13,9 @@ public record CourseResponseDto(
         String name,
 
         @JsonProperty("categoria")
-        String category,
-
-        @JsonProperty("descricao")
-        List<TopicEntity> topics
+        String category
 ) {
     public CourseResponseDto(CourseEntity course) {
-        this(course.getId(), course.getName(), course.getCategory(), course.getTopics());
-    }
-
-    public CourseEntity toEntity() {
-        return new CourseEntity(this.id, this.name, this.category, this.topics);
+        this(course.getId(), course.getName(), course.getCategory());
     }
 }

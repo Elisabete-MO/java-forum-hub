@@ -18,22 +18,20 @@ public record TopicResponseDto(
         String content,
 
         @JsonProperty("autor")
-        UserEntity user,
+        UserResponseDto user,
 
         @JsonProperty("curso")
-        CourseEntity course,
+        CourseResponseDto course,
 
         @JsonProperty("dataCriacao")
         LocalDateTime creationDate,
 
-        boolean status,
-
-        @JsonProperty("respostas")
-        List<ReplyEntity> replies
+        boolean status
 ) {
     public TopicResponseDto(TopicEntity topic) {
         this(topic.getId(), topic.getTitle(), topic.getContent(),
-                topic.getUser(), topic.getCourse(), topic.getCreationDate(),
-                topic.getStatus(), topic.getReplies());
+                new UserResponseDto(topic.getUser()),
+                new CourseResponseDto(topic.getCourse()),
+                topic.getCreationDate(), topic.getStatus());
     }
 }
