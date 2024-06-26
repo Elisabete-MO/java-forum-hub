@@ -8,6 +8,8 @@ import edu.forum.hub.models.entities.UserEntity;
 import edu.forum.hub.repository.TopicRepository;
 import edu.forum.hub.services.validations.ValidationTopic;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,5 +40,10 @@ public class PrincipalService {
         topicRepository.save(newTopic);
 
         return new TopicResponseDto(newTopic);
+    }
+
+    public Page<TopicResponseDto> getAllTopics(Pageable page) {
+        return topicRepository.findAll(page)
+                .map(TopicResponseDto::new);
     }
 }
