@@ -25,4 +25,9 @@ public class UserService {
                 .map(UserResponseDto::new)
                 .orElseThrow(() -> new NotFoundException("User not found"));
     }
+
+    public UserEntity getUserEntityById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+    }
 }

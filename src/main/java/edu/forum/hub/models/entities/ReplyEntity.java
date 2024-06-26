@@ -22,9 +22,8 @@ public class ReplyEntity {
     private String message;
 
     @Setter
-    @Column(nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
     @Setter
@@ -33,7 +32,7 @@ public class ReplyEntity {
     private TopicEntity topic;
 
     @Column(name = "creation_date", nullable = false)
-    private LocalDateTime creationDate = LocalDateTime.now();
+    private LocalDateTime creationDate;
 
     private String solution;
 }

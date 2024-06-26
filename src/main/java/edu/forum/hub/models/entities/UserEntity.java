@@ -22,30 +22,27 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     @Column(nullable = false)
     private String name;
 
-    @NotBlank
     @Email
     @Column(nullable = false, unique = true)
     private String email;
 
-    @NotBlank
     @Column(nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade =
             CascadeType.ALL, orphanRemoval = true)
-    private List<ProfileEntity> profiles = new ArrayList<>();
+    private List<ProfileEntity> profiles;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade =
             CascadeType.ALL)
-    private List<ReplyEntity> replies = new ArrayList<>();
+    private List<ReplyEntity> replies;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade =
             CascadeType.ALL)
-    private List<TopicEntity> topics = new ArrayList<>();
+    private List<TopicEntity> topics;
 
     //CONSTRUCTORS
     public UserEntity(UserRequestDto userRequestDto) {

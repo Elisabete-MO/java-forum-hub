@@ -1,5 +1,6 @@
 package edu.forum.hub.services;
 
+import edu.forum.hub.controllers.dtos.CourseRequestDto;
 import edu.forum.hub.controllers.dtos.CourseResponseDto;
 import edu.forum.hub.controllers.dtos.UserResponseDto;
 import edu.forum.hub.exceptions.NotFoundException;
@@ -17,17 +18,27 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public void createCourse() {
-        // create course
-    }
-
-    public void deleteCourse() {
-        // delete course
+    public  CourseResponseDto createCourse(CourseRequestDto course) {
+        CourseEntity newCourse = new CourseEntity(course);
+        courseRepository.save(newCourse);
+        return new CourseResponseDto(newCourse);
     }
 
     public CourseResponseDto getCourseById(Long id) {
         return courseRepository.findById(id)
                 .map(CourseResponseDto::new)
                 .orElseThrow(() -> new NotFoundException("Course not found"));
+    }
+
+    public CourseEntity getCourseEntityById(Long id) {
+        Optional<CourseEntity> course = courseRepository.findById(id);
+        if (course.isEmpty()) {
+            throw new NotAcceptableStatusException("Course not found");
+        }
+        return course.get();
+    }
+
+    public void deleteCourse() {
+        // delete course
     }
 }
