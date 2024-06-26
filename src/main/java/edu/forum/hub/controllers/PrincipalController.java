@@ -34,9 +34,14 @@ public class PrincipalController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<TopicResponseDto>> getAllTopics(@PageableDefault(size=5,
-        sort = {"id"}) Pageable page) {
+    public ResponseEntity<Page<TopicResponseDto>> getAllTopics(@PageableDefault(size=10,
+        sort = {"creationDate"}) Pageable page) {
         return ResponseEntity.ok(principalService.getAllTopics(page));
+    }
+
+    @GetMapping("/{courseName}")
+    public ResponseEntity<List<TopicResponseDto>> getAllTopicsByCourseName(@PathVariable String courseName) {
+        return ResponseEntity.ok(principalService.getAllTopicsByCourseName(courseName));
     }
 
 }

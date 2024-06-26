@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PrincipalService {
@@ -45,5 +46,12 @@ public class PrincipalService {
     public Page<TopicResponseDto> getAllTopics(Pageable page) {
         return topicRepository.findAll(page)
                 .map(TopicResponseDto::new);
+    }
+
+    public List<TopicResponseDto> getAllTopicsByCourseName(String courseName) {
+        return topicRepository.findByCourseName(courseName)
+                .stream()
+                .map(TopicResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
