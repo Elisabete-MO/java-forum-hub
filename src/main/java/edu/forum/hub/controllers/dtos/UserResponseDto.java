@@ -12,7 +12,8 @@ public record UserResponseDto (
         @JsonProperty("email")
         String email
 ) {
-    public UserResponseDto (UserEntity user) {
-        this(user.getId(), user.getName(), user.getEmail());
+
+    public UserResponseDto(UserEntity newUser) {
+        this(newUser.getId(), newUser.getName(), newUser.getEmail());
     }
 }

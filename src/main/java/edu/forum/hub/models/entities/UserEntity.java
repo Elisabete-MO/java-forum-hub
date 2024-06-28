@@ -3,12 +3,11 @@ package edu.forum.hub.models.entities;
 import edu.forum.hub.controllers.dtos.UserRequestDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Entity

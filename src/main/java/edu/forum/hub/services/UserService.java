@@ -23,11 +23,12 @@ public class UserService {
     public UserResponseDto getUserById(Long id) {
         return userRepository.findById(id)
                 .map(UserResponseDto::new)
-                .orElseThrow(() -> new NotFoundException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User " + id + " not" +
+                        " found"));
     }
 
     public UserEntity getUserEntityById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User " + id + " not found"));
     }
 }

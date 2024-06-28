@@ -2,6 +2,7 @@ package edu.forum.hub.controllers;
 
 import edu.forum.hub.controllers.dtos.TopicRequestDto;
 import edu.forum.hub.controllers.dtos.TopicResponseDto;
+import edu.forum.hub.controllers.dtos.TopicUpdateDto;
 import edu.forum.hub.services.PrincipalService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +34,35 @@ public class PrincipalController {
         return ResponseEntity.created(uri).body(newTopic);
     }
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<Page<TopicResponseDto>> getAllTopics(@PageableDefault(size=10,
         sort = {"creationDate"}) Pageable page) {
         return ResponseEntity.ok(principalService.getAllTopics(page));
     }
 
-    @GetMapping("/{courseName}")
-    public ResponseEntity<List<TopicResponseDto>> getAllTopicsByCourseName(@PathVariable String courseName) {
-        return ResponseEntity.ok(principalService.getAllTopicsByCourseName(courseName));
+    @GetMapping("/search")
+    public ResponseEntity<List<TopicResponseDto>> getAllTopicsByCourseName(
+            @RequestParam("curso") String courseName,
+            @RequestParam("ano") String year) {
+        return ResponseEntity.ok(principalService.getAllTopicsByCourseNameAndYear(courseName, year));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<TopicResponseDto> getTopicById(@PathVariable long id) {
+        return ResponseEntity.ok(principalService.getTopicById(id));
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<TopicResponseDto> updateTopic (
+            @PathVariable long id, @RequestBody @Valid TopicUpdateDto request) {
+        return ResponseEntity.ok(principalService.updateTopic(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<String> deleteTopic (@PathVariable long id) {
+        principalService.deleteTopic(id);
+        return ResponseEntity.ok().build();
+    }
 }

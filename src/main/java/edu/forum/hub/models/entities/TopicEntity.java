@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +37,7 @@ public class TopicEntity {
     @JoinColumn(name = "course_id", nullable = false)
     private CourseEntity course;
 
+    @Setter
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
@@ -45,7 +45,7 @@ public class TopicEntity {
     private Boolean status;
 
     @OneToMany(mappedBy = "topic", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ReplyEntity> replies = new ArrayList<>();
+    private List<ReplyEntity> replies;
 
     //CONSTRUCTORS
     public TopicEntity(String title, String content, UserEntity user, CourseEntity course) {
