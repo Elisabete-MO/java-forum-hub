@@ -82,8 +82,7 @@ public class PrincipalService {
 
         TopicEntity topic = getTopicEntityById(id);
 
-        topic.setContent(request.content());
-        topic.setStatus(request.status());
+        topic.setStatus(Boolean.valueOf("true"));
         topicRepository.save(topic);
 
         return new TopicResponseDto(topic);
