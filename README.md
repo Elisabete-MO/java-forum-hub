@@ -87,6 +87,12 @@ Para abrir e executar o projeto, siga estes passos:
 5.  Execute o arquivo `ForumHubApplication.java` pela sua IDE ou use o Maven (`mvn spring-boot:run`) para compilar e iniciar o projeto.
 6.  As interações com a API devem ser realizadas através de aplicações como Insomnia ou Postman. Essas ferramentas permitem testar as rotas e funcionalidades de forma prática e eficiente.
 
+### 🔒 Autenticação 🔑
+A API utiliza autenticação JWT. Para acessar os endpoints protegidos, siga as instruções abaixo para criar um login e utilizar o token de autorização.
+> Somente as rotas de criação de usuário e de login estão disponíveis sem 
+> autenticação.
+
+
 #### 🌐 Endpoints
 <details>
 <summary><b> Criar Tópico </b></summary>
