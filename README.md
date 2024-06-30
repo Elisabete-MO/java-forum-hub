@@ -79,84 +79,106 @@ Para acessar o projeto, siga estas instruções:
 
 Para abrir e executar o projeto, siga estes passos:
 
-1.  Certifique-se de que você tenha as dependências[¹] do projeto instaladas,  incluindo o Java Development Kit (JDK), o Apache Maven e o MySQL.
+1.  Certifique-se de que você tenha as [dependências](#1) do projeto 
+    instaladas,  incluindo o Java Development Kit (JDK), o Apache Maven e o MySQL.
 2.  Navegue até o diretório do projeto em sua IDE.
 3.  Ajuste as configurações do MySQL no arquivo `application.properties`.
 4.  Localize e abra o arquivo principal do projeto.
 5.  Execute o arquivo `ForumHubApplication.java` pela sua IDE ou use o Maven (`mvn spring-boot:run`) para compilar e iniciar o projeto.
 6.  As interações com a API devem ser realizadas através de aplicações como Insomnia ou Postman. Essas ferramentas permitem testar as rotas e funcionalidades de forma prática e eficiente.
 
-#### 🌐 Endpoints
+### 🔒 Autenticação 🔑
+A API utiliza autenticação JWT. Para acessar os endpoints protegidos, siga as instruções abaixo para criar um login e utilizar o token de autorização.
+> Somente as rotas de criação de usuário e de login estão disponíveis sem 
+> autenticação.
 
--   **Criar Tópico**
-    -   Método: `POST`
-    -   Rota: `/topicos`
-    -   Corpo:
+
+#### 🌐 Endpoints
+<details>
+<summary><b> Criar Tópico </b></summary>
+
+-   Método: `POST` 
+-   Rota: `/topicos`
+-   Corpo:
 ```json 
 {
-	"titulo":  "Título do Tópico",
-	"mensagem":  "Conteúdo do Tópico",
-	"autor":  1,
-	"curso":  1
+  "titulo":  "Título do Tópico",
+  "mensagem":  "Conteúdo do Tópico",
+  "autor":  1,
+  "curso":  1
 }
 ```
--   **Mostrar Todos os Tópicos**
-    -   Método: `GET`
-    -   Rota: `/topicos`
-<br>
-<br>
--   **Mostrar Todos os Tópicos por Nome do Curso e Data de Criação**
-    -   Método: `GET`
-    -   Rota: `/topicos/search?curso={nome_do_curso}&ano={ano_de_criação_do_tópico(AAAA)} `
-        <br>
-        <br>
--   **Mostrar Tópico Específico**
-    -   Método: `GET`
-    -   Rota: `/topicos/{id}`
-        <br>
-        <br>
--   **Atualizar Tópico**
-    -   Método: `PUT`
-    -   Rota: `/topicos/{id}`
-    -   Corpo:
+</details>
+<details>
+<summary><b> Mostrar Todos os Tópicos </b></summary>
+
+- Método: `GET`
+- Rota: `/topicos`
+</details>
+<details>
+<summary><b> Mostrar Todos os Tópicos por Nome do Curso e Data de 
+Criação </b></summary>
+
+- Método: `GET`
+- Rota: `/topicos/search?curso={nome_do_curso}&ano={ano_de_criação_do_tópico(AAAA)} `
+</details>
+<details>
+<summary><b> Mostrar Tópico Específico </b></summary>
+
+- Método: `GET`
+- Rota: `/topicos/{id}`
+</details>
+<details>
+<summary><b> Atualizar Tópico </b></summary>
+
+- Método: `PUT`
+- Rota: `/topicos/{id}`
+- Corpo:
 ```json 
 {
-	"titulo":  "Título do Tópico",
-	"mensagem":  "Conteúdo do Tópico",
-	"status":  "false"
+  "titulo":  "Título do Tópico",
+  "mensagem":  "Conteúdo do Tópico",
+  "status":  "true"
 }
 ```
--   **Eliminar Tópico**
+</details>
+<details>
+<summary><b> Eliminar Tópico </b></summary>
+
     -   Método: `DELETE`
     -   Rota: `/topicos/{id}`
-        <br>
-        <br>
--   **Criar Usuário**
+</details>
+<details>
+<summary><b> Criar Usuário </b></summary>
+
     -   Método: `POST`
     -   Rota: `/usuarios`
     -   Corpo:
 ```json 
 {
-	"nome":  "Nome do Usuário",
-	"email":  "usuario@email.com",
-	"senha":  "senha do usuário"
+  "nome":  "Nome do Usuário",
+  "email":  "usuario@email.com",
+  "senha":  "senha do usuário"
 }
 ```
+</details>
+<details>
+<summary><b> Criar Curso </b></summary>
 
--   **Criar Curso**
     -   Método: `POST`
     -   Rota: `/cursos`
     -   Corpo:
 ```json 
 {
-	"nome":  "nome_do_curso",
-	"categoria":  "categoria_do_curso"
+  "nome":  "nome_do_curso",
+  "categoria":  "categoria_do_curso"
 }
 ```
+</details>
+
 ### 🎲 Banco de Dados - Modelo Entidade Relacionamento (MER)
 <p align="center"><img src="./imgs/forum-hub-er.png" alt="Modelo 
 Entidade-Relacionamento"></p>
-
 
 ### ✔️ Tecnologias Utilizadas
 -   **Java JDK**: Versão 22.0.1
@@ -165,9 +187,8 @@ Entidade-Relacionamento"></p>
 -   **MySQL**: Versão 8.3.0
 -   **IDE**: IntelliJ IDEA (opcional)
 ---------------------------------------------------------
-
-<details> 
-<summary><b> ✔️ [¹] Dependências </b></summary> 
+<details>
+<summary><h3 id="1">✔️ Dependências </h3></summary>
 
 - Lombok
 - Spring Web
