@@ -21,10 +21,9 @@
     </a>
 </p>
 
-[//]: # (<p align="center">)
-[//]: # (    <img src="./imgs/badge literalura.png" width="200px" alt="Badge de )
-[//]: # (Conquista">)
-[//]: # (</p>)
+<p align="center">
+    <img src="./imgs/Badge-Spring.png" width="200px" alt="Badge de Conquista">
+</p>
 
 ### 📖 Descrição do Projeto
 
