@@ -79,19 +79,70 @@ Para acessar o projeto, siga estas instruções:
 
 Para abrir e executar o projeto, siga estes passos:
 
-1.  Certifique-se de que você tenha as [dependências](#1) do projeto 
-    instaladas,  incluindo o Java Development Kit (JDK), o Apache Maven e o MySQL.
-2.  Navegue até o diretório do projeto em sua IDE.
-3.  Ajuste as configurações do MySQL no arquivo `application.properties`.
-4.  Localize e abra o arquivo principal do projeto.
-5.  Execute o arquivo `ForumHubApplication.java` pela sua IDE ou use o Maven (`mvn spring-boot:run`) para compilar e iniciar o projeto.
-6.  As interações com a API devem ser realizadas através de aplicações como Insomnia ou Postman. Essas ferramentas permitem testar as rotas e funcionalidades de forma prática e eficiente.
+1. Certifique-se de que você tenha as dependências do projeto instaladas,  
+   incluindo o Java Development Kit (JDK), o Apache Maven e o MySQL com as 
+   credenciais apropriadas configuradas corretamente no arquivo `application.
+   properties`. 
+2. Navegue até o diretório do projeto em sua IDE. 
+3. Abra um terminal ou prompt de comando na pasta raiz do projeto e execute 
+   o seguinte comando: `mvn install`. 
+4. Localize e abra o arquivo principal do projeto. 
+5. Execute o arquivo `ForumHubApplication.java` pela sua IDE ou use o Maven (`mvn spring-boot:run`) para compilar e iniciar o projeto. 
+6. As interações com a API devem ser realizadas através de aplicações como Insomnia ou Postman. Essas ferramentas permitem testar as rotas e funcionalidades de forma prática e eficiente.
 
 ### 🔒 Autenticação 🔑
 A API utiliza autenticação JWT. Para acessar os endpoints protegidos, siga as instruções abaixo para criar um login e utilizar o token de autorização.
 > Somente as rotas de criação de usuário e de login estão disponíveis sem 
 > autenticação.
+<details>
+<summary><b> 1. Criar usuário </b></summary>
 
+- Método: `POST`
+- Rota: `/usuarios`
+- Corpo:
+```json 
+{
+  "nome":  "Nome do Usuário",
+  "email":  "usuario@email.com",
+  "senha":  "senha do usuário"
+}
+```
+</details>
+<details>
+<summary><b> 2. Criar login </b></summary>
+
+- Método: `POST`
+- Rota: `/login`
+- Corpo:
+```json 
+{
+  "email":  "usuario@email.com",
+  "senha":  "senha do usuário"
+}
+```
+</details>
+<details>
+<summary><b> 3. Resposta </b></summary>
+
+- Um token JWT é retornado se as credenciais estiverem corretas.
+- Exemplo de resposta:
+```json 
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBUEkgRm9ydW0gSHViIiwic3ViIjoidXN1YXJpb0BlbWFpbC5jb20iLCJleHAiOjE3MTk3MTg5NjB9.aTy4MrXmZYEtyF8rVHssnvKbDD_xjiHidYnd51CLBbk"
+}
+```
+</details>
+<details>
+<summary><b> 4. Utilização do Token </b></summary>
+
+- Após obter o token, você deve incluí-lo no header Authorization em todas as requisições subsequentes aos endpoints protegidos.
+- Formato do Header:
+
+| **Key** | **Value**                                            |
+| --- |------------------------------------------------------|
+| Authorization | eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOi(...) |
+
+</details>
 
 #### 🌐 Endpoints
 <details>
@@ -99,6 +150,7 @@ A API utiliza autenticação JWT. Para acessar os endpoints protegidos, siga as 
 
 -   Método: `POST` 
 -   Rota: `/topicos`
+- Cabeçalho: `Authorization: {seu_token_jwt_aqui}`
 -   Corpo:
 ```json 
 {
@@ -114,6 +166,7 @@ A API utiliza autenticação JWT. Para acessar os endpoints protegidos, siga as 
 
 - Método: `GET`
 - Rota: `/topicos`
+- Cabeçalho: `Authorization: {seu_token_jwt_aqui}`
 </details>
 <details>
 <summary><b> Mostrar Todos os Tópicos por Nome do Curso e Data de 
@@ -121,18 +174,21 @@ Criação </b></summary>
 
 - Método: `GET`
 - Rota: `/topicos/search?curso={nome_do_curso}&ano={ano_de_criação_do_tópico(AAAA)} `
+- Cabeçalho: `Authorization: {seu_token_jwt_aqui}`
 </details>
 <details>
 <summary><b> Mostrar Tópico Específico </b></summary>
 
 - Método: `GET`
 - Rota: `/topicos/{id}`
+- Cabeçalho: `Authorization: {seu_token_jwt_aqui}`
 </details>
 <details>
 <summary><b> Atualizar Tópico </b></summary>
 
 - Método: `PUT`
 - Rota: `/topicos/{id}`
+- Cabeçalho: `Authorization: {seu_token_jwt_aqui}`
 - Corpo:
 ```json 
 {
@@ -145,29 +201,17 @@ Criação </b></summary>
 <details>
 <summary><b> Eliminar Tópico </b></summary>
 
-    -   Método: `DELETE`
-    -   Rota: `/topicos/{id}`
-</details>
-<details>
-<summary><b> Criar Usuário </b></summary>
-
-    -   Método: `POST`
-    -   Rota: `/usuarios`
-    -   Corpo:
-```json 
-{
-  "nome":  "Nome do Usuário",
-  "email":  "usuario@email.com",
-  "senha":  "senha do usuário"
-}
-```
+- Método: `DELETE`
+- Rota: `/topicos/{id}`
+- Cabeçalho: `Authorization: {seu_token_jwt_aqui}`
 </details>
 <details>
 <summary><b> Criar Curso </b></summary>
 
-    -   Método: `POST`
-    -   Rota: `/cursos`
-    -   Corpo:
+- Método: `POST`
+- Rota: `/cursos`
+- Cabeçalho: `Authorization: {seu_token_jwt_aqui}`
+- Corpo:
 ```json 
 {
   "nome":  "nome_do_curso",
@@ -187,8 +231,8 @@ Entidade-Relacionamento"></p>
 -   **MySQL**: Versão 8.3.0
 -   **IDE**: IntelliJ IDEA (opcional)
 ---------------------------------------------------------
-<details>
-<summary><h3 id="1">✔️ Dependências </h3></summary>
+<h3><details>
+<summary> ✔️ Dependências </summary></h3>
 
 - Lombok
 - Spring Web
